@@ -1,7 +1,7 @@
 # See http://help.github.com/ignore-files/ for more about ignoring files.
 
 # compiled output
-dist/*
+**/dist/*
 !/dist/v4
 !/dist/v5
 !/dist/v6
@@ -11,8 +11,7 @@ dist/*
 /out-tsc
 
 # dependencies
-/node_modules
-/admin/node_modules
+**/node_modules
 
 # IDEs and editors
 /.idea
@@ -55,3 +54,6 @@ Thumbs.db
 
 # compiled templates
 src/app/homepage/pages/**/*.html
+
+#enviroment variables
+**/.env
