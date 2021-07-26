@@ -7,7 +7,9 @@ import { ProductModule } from './product/product.module';
 
 @Module({
     imports: [
-        ConfigModule.forRoot(),
+        ConfigModule.forRoot({
+            isGlobal: true,
+        }),
         TypeOrmModule.forRoot({
             type: 'mysql',
             host: process.env.MYSQL_HOST,

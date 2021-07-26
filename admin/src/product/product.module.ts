@@ -13,7 +13,7 @@ import { ClientsModule, Transport } from '@nestjs/microservices';
                 name: 'PRODUCT_SERVICE',
                 transport: Transport.RMQ,
                 options: {
-                    urls: [process.env.AMPQ_URL],
+                    urls: ['amqps://vjpdokxl:PfRJEhdRHmckX9E9uMTXTu_Oor1R4VOS@beaver.rmq.cloudamqp.com/vjpdokxl'],
                     queue: 'main_queue',
                     queueOptions: {
                         durable: false
