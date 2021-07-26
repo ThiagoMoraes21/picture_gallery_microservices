@@ -4,12 +4,15 @@ import { InjectModel } from '@nestjs/mongoose';
 import { CreateProductDto } from './dto/create-product.dto';
 import { UpdateProductDto } from './dto/update-product.dto';
 import { Model } from 'mongoose';
+import { HttpService } from '@nestjs/axios';
+import { Observable } from 'rxjs';
 
 @Injectable()
 export class ProductService {
 
     constructor(
-        @InjectModel(Product.name) private readonly productModel: Model<ProductDocument>
+        @InjectModel(Product.name) private readonly productModel: Model<ProductDocument>,
+        private httpService: HttpService
     ) {}
 
     async create(createProductDto: CreateProductDto): Promise<ProductDocument> {
@@ -29,13 +32,19 @@ export class ProductService {
         return this.productModel.findById(id);
     }
 
-    async update(id: number, product: UpdateProductDto) {
-        return this.productModel.findOneAndUpdate(
-            { id }, product
+    async update(id: number, product: UpdateProductDto): Promise<any> {
+        return this.productModel.updateOne(
+            { id: id },
+            product
         );
     }
 
     async remove(id: string): Promise<any> {
         return this.productModel.deleteOne({ _id: id });
+    }
+
+    like(id: string): Observable<any> {
+        const baseUrl = `http://localhost:8000/api/products/${id}/like`;
+        return this.httpService.post(baseUrl, {});
     }
 }

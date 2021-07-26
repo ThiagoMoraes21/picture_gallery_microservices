@@ -1,4 +1,4 @@
-import { Controller, Get, Post, Body, Patch, Param, Delete } from '@nestjs/common';
+import { Controller, Get, Post, Param } from '@nestjs/common';
 import { ProductService } from './product.service';
 import { CreateProductDto } from './dto/create-product.dto';
 import { UpdateProductDto } from './dto/update-product.dto';
@@ -21,6 +21,19 @@ export class ProductController {
     @Get('/findById/:id')
     findById(@Param('id') id: string) {
         return this.productService.findByID(id);
+    }
+
+    @Post(':id/like')
+    async like(@Param('id') id: string) {
+        const product = await this.productService.findOne(+id);
+
+        this.productService.like(id).subscribe(
+            res => console.log('product liked')
+        );
+
+        return this.productService.update(+id, { 
+            likes: product.likes + 1
+        });
     }
 
     @EventPattern('product_created')
