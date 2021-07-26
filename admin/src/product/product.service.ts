@@ -16,7 +16,7 @@ export class ProductService {
         return this.productRepository.find();
     }
 
-    async findByID(id: string): Promise<Product> {
+    async findByID(id: number): Promise<Product> {
         return this.productRepository.findOne(id);
     }
 
@@ -24,11 +24,11 @@ export class ProductService {
         return this.productRepository.save(product);
     }
 
-    async update(id: string, product: UpdateProductDto): Promise<any> {
+    async update(id: number, product: UpdateProductDto): Promise<any> {
         return this.productRepository.update(id, product);
     }
 
-    async delete(id: string): Promise<any> {
+    async delete(id: number): Promise<any> {
         return this.productRepository.delete(id);
     }
 }

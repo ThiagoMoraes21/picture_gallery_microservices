@@ -19,7 +19,7 @@ export class ProductController {
 
     @Get(':id')
     async findByID(@Param('id') id: string) {
-        return this.productService.findByID(id);
+        return this.productService.findByID(+id);
     }
 
     @Post()
@@ -31,15 +31,23 @@ export class ProductController {
 
     @Patch(':id') 
     async update(@Param('id') id: string, @Body() product: UpdateProductDto) {
-        await this.productService.update(id, product);
-        const updatedProduct = await this.productService.findByID(id);
+        await this.productService.update(+id, product);
+        const updatedProduct = await this.productService.findByID(+id);
         this.client.emit('product_updated', updatedProduct);
         return updatedProduct;
     }   
 
     @Delete(':id')
     async delete(@Param('id') id: string) {
-        await this.productService.delete(id);
+        await this.productService.delete(+id);
         this.client.emit('product_deleted', id);
+    }
+
+    @Post(':id/like')
+    async like(@Param('id') id: string) {
+        const product = await this.productService.findByID(+id);
+        return this.productService.update(+id, {
+            likes: product.likes + 1
+        });
     }
 }
